@@ -7,7 +7,7 @@ import os
 import re
 from commands import getstatusoutput
 
-MEANINGLESS_TYPES = ('t', 'T', 'r', 'R')
+MEANINGLESS_TYPES = 'tTrRdD'
 
 def nm(filename):
     p_symbol = re.compile('^([0-f]+|\s+) (\S) (.*?)$')
@@ -30,6 +30,8 @@ def nm(filename):
 
 
 def main():
+    global MEANINGLESS_TYPES
+    
     if len(sys.argv) < 2:
         print 'Compare symbols in two object files'
         print 'Syntax: %s FILE1 [FILE2]'
@@ -37,6 +39,9 @@ def main():
     elif len(sys.argv) == 2:
         os.execlp('nm', sys.argv[0], sys.argv[1])
     else:
+        if len(sys.argv) > 3:
+            MEANINGLESS_TYPES = sys.argv[3]
+        
         fnA, symA = nm(sys.argv[1])
         fnB, symB = nm(sys.argv[2])
         sym_set = set(symA.keys() + symB.keys())
