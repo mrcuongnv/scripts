@@ -62,6 +62,8 @@ def main():
                     print '[FAIL]'
                     print '\tA:', lddA[libfn]
                     print '\tB:', lddB[libfn]
+                    libA.append(lddA[libfn])
+                    libB.append(lddB[libfn])
             elif lddA.has_key(libfn):
                 print '[FAIL]'
                 print '\tA:', lddA[libfn]
