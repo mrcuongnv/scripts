@@ -57,7 +57,7 @@ def main():
             if lddA.has_key(libfn) and lddB.has_key(libfn):
                 if lddA[libfn] == lddB[libfn]:
                     print '[ OK ]'
-                    print '\t%s' % libfn
+                    print '\t%s' % libA[libfn]
                 else:
                     print '[FAIL]'
                     print '\tA:', lddA[libfn]
