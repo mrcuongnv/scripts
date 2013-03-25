@@ -18,11 +18,18 @@ def get_ldd_info(filename):
         for line in output.splitlines():
             m = p_dyn_lib.match(line)
             if m:
-                ldd[m.group(1)] = m.group(2)
+                ldd[m.group(1)] = os.path.realpath(m.group(2))
             else:
                 m = p_abs_lib.match(line)
                 if m:
-                    ldd[m.group(1)] = m.group(1)
+                    ldd[m.group(1)] = os.path.realpath(m.group(1))
+                else:
+                    line = line.strip()
+                    info = line.split('=>')
+                    if len(info) == 2:
+                        ldd[info[1].strip()] = info[2].strip()
+                    else:
+                        ldd[line] == line
     return filename, ldd
 
 
