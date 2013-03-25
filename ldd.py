@@ -8,7 +8,7 @@ import re
 from commands import getstatusoutput
 
 
-def get_ldd_info(filename):
+def ldd(filename):
     p_dyn_lib = re.compile('^\s*(.*?)\s*=>\s*(.*?)\s*\((.*?)\)$')
     p_abs_lib = re.compile('^\s*(.*?)\s*\((.*?)\)$')
     
@@ -41,8 +41,8 @@ def main():
     elif len(sys.argv) == 2:
         os.execlp('ldd', sys.argv[0], sys.argv[1])
     else:
-        fnA, lddA = get_ldd_info(sys.argv[1])
-        fnB, lddB = get_ldd_info(sys.argv[2])
+        fnA, lddA = ldd(sys.argv[1])
+        fnB, lddB = ldd(sys.argv[2])
         libnames = set(lddA.keys() + lddB.keys())
         libnamemax = max([len(fn) for fn in libnames])
         libA = []
