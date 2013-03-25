@@ -32,18 +32,21 @@ def nm(filename):
 
 def filter_suffix(symbol_table):
     removed_list = []
+    new_list     = {}
     for symbol in symbol_table:
         basename = symbol[:-2]
         if symbol.endswith('.A') and symbol_table.has_key(basename + '.W'):
-            if not symbol_table.has_key(basename):
-                symbol_table[basename] = {'type':  symbol_table[symbol]['type'],
-                                          'count': symbol_table[symbol]['count'] + symbol_table[basename + '.W']['count']}
-            else:
-                symbol_table[basename]['count'] += symbol_table[symbol]['count'] + symbol_table[basename + '.W']['count']
+            new_list[basename] = {'type':  symbol_table[symbol]['type'],
+                                  'count': symbol_table[symbol]['count'] + symbol_table[basename + '.W']['count']}
             removed_list.append(symbol)
             removed_list.append(symbol[:-2] + '.W')
     for symbol in removed_list:
         del symbol_table[symbol]
+    for symbol in new_list:
+        if symbol_table.has_key(symbol):
+            symbol_table[symbol]['count'] += new_list[symbol]['count']
+        else:
+            symbol_table[symbol] = new_list[symbol]
     return symbol_table
 
 
