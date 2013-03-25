@@ -13,24 +13,24 @@ def ldd(filename):
     p_abs_lib = re.compile('^\s*(.*?)\s*\((.*?)\)$')
     
     status, output = getstatusoutput('/usr/bin/ldd %s' % filename)
-    ldd = {}
+    so = {}
     if status == os.EX_OK:
         for line in output.splitlines():
             m = p_dyn_lib.match(line)
             if m:
-                ldd[m.group(1)] = os.path.realpath(m.group(2))
+                so[m.group(1)] = os.path.realpath(m.group(2))
             else:
                 m = p_abs_lib.match(line)
                 if m:
-                    ldd[m.group(1)] = os.path.realpath(m.group(1))
+                    so[m.group(1)] = os.path.realpath(m.group(1))
                 else:
                     line = line.strip()
                     info = line.split('=>')
                     if len(info) == 2:
-                        ldd[info[1].strip()] = info[2].strip()
+                        so[info[1].strip()] = info[2].strip()
                     else:
-                        ldd[line] == line
-    return os.path.realpath(filename), ldd
+                        so[line] == line
+    return os.path.realpath(filename), so
 
 
 def main():
