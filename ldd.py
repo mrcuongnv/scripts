@@ -30,7 +30,7 @@ def get_ldd_info(filename):
                         ldd[info[1].strip()] = info[2].strip()
                     else:
                         ldd[line] == line
-    return filename, ldd
+    return os.path.realpath(filename), ldd
 
 
 def main():
@@ -48,15 +48,16 @@ def main():
         libA = []
         libB = []
         
-        print 'A =', fnA
-        print 'B =', fnB
+        filenamemax = max(len(fnA), len(fnB))
+        print ('A = %%-%ds  %%12d (bytes)' % filenamemax) % (fnA, os.path.getsize(fnA))
+        print ('B = %%-%ds  %%12d (bytes)' % filenamemax) % (fnB, os.path.getsize(fnB))
         print '-'*(max(len(fnA), len(fnB)) + 4)
         for libfn in sorted(libnames):
             print
             print ('%%-%ds' % libnamemax) % libfn,
             if lddA.has_key(libfn) and lddB.has_key(libfn):
                 if lddA[libfn] == lddB[libfn]:
-                    print '[ OK ]'
+                    print
                     print '\t%s' % lddA[libfn]
                 else:
                     print '[FAIL]'
