@@ -68,7 +68,7 @@ def main():
         print 'SUMMARY:',
         if len(libA) == len(libB):
             if libA:
-                print 'A == B, but PATH'
+                print 'A != B, but PATH'
             else:
                 print 'A == B'
         if libA and not libB:
