@@ -35,7 +35,7 @@ def filter_suffix(symbol_table):
     for symbol in symbol_table:
         basename = symbol[:-2]
         if symbol.endswith('.A') and symbol_table.has_key(basename + '.W'):
-            if not symbol_table.has_key[basename]:
+            if not symbol_table.has_key(basename):
                 symbol_table[basename] = {'type':  symbol_table[symbol]['type'],
                                           'count': symbol_table[symbol]['count'] + symbol_table[basename + '.W']['count']}
             else:
