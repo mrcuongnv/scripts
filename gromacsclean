@@ -1,1 +1,1 @@
-/bin/rm -f #* *.{edr,log,trr,xtc}
+/bin/rm -f \#* *.{edr,log,trr,xtc}
